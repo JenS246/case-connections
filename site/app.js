@@ -1,5 +1,5 @@
 import { CASES } from "./cases.js";
-import { availableCombinations, essentialProgress, findCombination } from "./game-core.js";
+import { availableCombinations, createCaseDeck, essentialProgress, findCombination } from "./game-core.js";
 
 const elements = {
   roundLabel: document.querySelector("#round-label"),
@@ -33,18 +33,20 @@ const state = {
   discoveries: [],
   selected: [],
   newest: null,
-  revealShown: false
+  revealShown: false,
+  caseDeck: createCaseDeck(CASES.length, 0)
 };
 
 function currentCase() {
   return CASES[state.caseIndex];
 }
 
-function scrambleCaseIndex() {
-  if (CASES.length < 2) return 0;
-  let next = state.caseIndex;
-  while (next === state.caseIndex) next = Math.floor(Math.random() * CASES.length);
-  return next;
+function nextCaseIndex() {
+  if (state.caseDeck.length === 0) {
+    state.caseDeck = createCaseDeck(CASES.length, state.caseIndex);
+  }
+
+  return state.caseDeck.shift() ?? state.caseIndex;
 }
 
 function startRound(caseIndex, incrementRound = true) {
@@ -256,11 +258,11 @@ elements.clearButton.addEventListener("click", () => {
 
 elements.hintButton.addEventListener("click", showHint);
 elements.restartButton.addEventListener("click", restartRound);
-elements.newRoundButton.addEventListener("click", () => startRound(scrambleCaseIndex()));
+elements.newRoundButton.addEventListener("click", () => startRound(nextCaseIndex()));
 elements.viewResultsButton.addEventListener("click", () => openReveal());
 elements.revealNextButton.addEventListener("click", () => {
   elements.revealDialog.close();
-  startRound(scrambleCaseIndex());
+  startRound(nextCaseIndex());
 });
 elements.howButton.addEventListener("click", () => elements.howDialog.showModal());
 

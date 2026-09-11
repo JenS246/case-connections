@@ -2,7 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { CASES } from "../site/cases.js";
-import { availableCombinations, essentialProgress, findCombination, pairKey } from "../site/game-core.js";
+import {
+  availableCombinations,
+  createCaseDeck,
+  essentialProgress,
+  findCombination,
+  pairKey
+} from "../site/game-core.js";
 
 test("the launch collection contains twelve distinct, sourced cases", () => {
   assert.equal(CASES.length, 12);
@@ -16,6 +22,17 @@ test("combination lookup is order independent", () => {
   assert.equal(pairKey("train", "platform"), pairKey("platform", "train"));
   assert.equal(findCombination(record, "train", "platform")?.result, "rail station");
   assert.equal(findCombination(record, "platform", "train")?.result, "rail station");
+});
+
+test("the case deck shows every other case once before reshuffling", () => {
+  const randomValues = [0.18, 0.74, 0.31, 0.92, 0.46, 0.63, 0.07, 0.55, 0.27, 0.81, 0.4];
+  let randomIndex = 0;
+  const deck = createCaseDeck(CASES.length, 0, () => randomValues[randomIndex++ % randomValues.length]);
+
+  assert.equal(deck.length, CASES.length - 1);
+  assert.equal(new Set(deck).size, deck.length);
+  assert.ok(!deck.includes(0));
+  assert.deepEqual([...deck].sort((a, b) => a - b), Array.from({ length: CASES.length - 1 }, (_, index) => index + 1));
 });
 
 test("every combination graph and reveal target is reachable", () => {

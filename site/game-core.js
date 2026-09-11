@@ -35,3 +35,16 @@ export function essentialProgress(caseRecord, discovered) {
     .filter((result) => known.has(result));
   return new Set(discoveredResults).size;
 }
+
+export function createCaseDeck(caseCount, excludedIndex, random = Math.random) {
+  const deck = Array.from({ length: caseCount }, (_, index) => index).filter(
+    (index) => index !== excludedIndex
+  );
+
+  for (let index = deck.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [deck[index], deck[swapIndex]] = [deck[swapIndex], deck[index]];
+  }
+
+  return deck;
+}
