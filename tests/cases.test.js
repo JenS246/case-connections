@@ -79,6 +79,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(app, /viewResultsButton\.addEventListener\("click", \(\) => openReveal\(\)\)/);
   assert.match(html, />Hint</);
   assert.match(html, />What happened\?</);
+  assert.match(html, />working theory</);
   assert.match(html, /Apply discoveries to find enough essential clues to unseal the case\./);
   assert.match(styles, /\.doodle-door/);
   assert.match(styles, /\.doodle-reporter/);
@@ -98,6 +99,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   }
 
   assert.ok(!html.includes('id="sound-button"'));
+  assert.ok(!html.includes("your working theory"));
   assert.ok(!app.includes("AudioContext"));
   assert.ok(!html.includes('class="notes-kicker"'));
 });
