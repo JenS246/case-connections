@@ -97,8 +97,13 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(html, />working theory</);
   assert.match(html, /Pair ordinary details\./);
   assert.match(html, /Apply discoveries to find enough essential clues to unseal the case\./);
-  assert.match(styles, /\.doodle-door/);
-  assert.match(styles, /\.doodle-reporter/);
+  assert.equal((html.match(/class="doodle doodle-/g) ?? []).length, 4);
+  assert.match(styles, /\.doodle-bench/);
+  assert.match(styles, /\.doodle-jury/);
+  assert.match(styles, /\.reveal-dialog::before/);
+  assert.match(app, /No identified connection\. Test a new theory/);
+  assert.match(app, /Think: \$\{option\.result\}\./);
+  assert.match(app, /revealName\.focus\(\{ preventScroll: true \}\)/);
 
   const retiredCopy = [
     "Ask for a hint",
@@ -107,7 +112,8 @@ test("the play surface keeps results reachable and uses the revised copy", async
     "choose one",
     "then another",
     "that seem connected",
-    "Keep using discoveries"
+    "Keep using discoveries",
+    "You found the thread"
   ];
 
   for (const phrase of retiredCopy) {
@@ -121,6 +127,9 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.ok(!html.includes('id="discovery-count"'));
   assert.ok(!html.includes('id="progress-label"'));
   assert.ok(!app.includes("Margin note: try"));
+  assert.ok(!app.includes("Now choose what connects to"));
+  assert.ok(!styles.includes(".doodle-door"));
+  assert.ok(!styles.includes(".doodle-reporter"));
   assert.match(app, /function prefersReducedMotion\(\)/);
   assert.ok(!app.includes("AudioContext"));
   assert.ok(!html.includes('class="notes-kicker"'));

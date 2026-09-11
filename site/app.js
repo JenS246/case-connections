@@ -87,7 +87,7 @@ function updateSelection(word) {
 
   if (state.selected.length === 0) {
     state.selected = [word];
-    setFeedback(`Now choose what connects to ${word}.`, "neutral");
+    setFeedback("", "neutral");
     render();
     return;
   }
@@ -102,7 +102,7 @@ function resolveSelection() {
   const combination = findCombination(currentCase(), first, second);
 
   if (!combination) {
-    setFeedback(`No useful connection between ${first} and ${second}. Try a different theory.`, "miss");
+    setFeedback("No identified connection. Test a new theory", "miss");
     elements.tray.classList.remove("tray-miss");
     void elements.tray.offsetWidth;
     elements.tray.classList.add("tray-miss");
@@ -210,12 +210,7 @@ function showHint() {
   }
 
   const option = options[Math.floor(Math.random() * options.length)];
-  const prompts = [
-    `Look for two notes that could suggest “${option.result}.”`,
-    `One available connection leads to “${option.result}.” What evidence points there?`,
-    `A useful next discovery is “${option.result}.” Which details support it?`
-  ];
-  setFeedback(prompts[Math.floor(Math.random() * prompts.length)], "hint");
+  setFeedback(`Think: ${option.result}.`, "hint");
 }
 
 function populateReveal() {
@@ -231,7 +226,11 @@ function populateReveal() {
 function openReveal(delay = 0) {
   populateReveal();
   window.setTimeout(() => {
-    if (!elements.revealDialog.open) elements.revealDialog.showModal();
+    if (!elements.revealDialog.open) {
+      elements.revealDialog.showModal();
+      elements.revealName.focus({ preventScroll: true });
+      elements.revealDialog.scrollTop = 0;
+    }
   }, delay);
 }
 
