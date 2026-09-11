@@ -21,7 +21,7 @@ export const CASES = [
       { items: ["unforeseeable risk", "railroad guard"], result: "duty to plaintiff" }
     ],
     requiredDiscoveries: ["explosion", "falling scales", "distant injury", "duty to plaintiff"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "Two railroad employees helped a passenger board a moving train, knocking a small, newspaper-wrapped package onto the tracks.",
     caseSummary: "The package contained fireworks. The blast toppled scales farther down the platform and injured Helen Palsgraf. The court held that the railroad's conduct did not create a foreseeable risk to her, so it owed her no duty with respect to that conduct.",
     legalIssue: "Negligence, duty, and the boundary of foreseeable risk. Chief Judge Cardozo's majority framed the issue through duty to the particular plaintiff; Judge Andrews's dissent focused on proximate cause."
@@ -45,7 +45,7 @@ export const CASES = [
       { items: ["surgery", "result fell short"], result: "additional harm" }
     ],
     requiredDiscoveries: ["skin graft", "promised perfect hand", "breach of warranty", "expectation damages"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A doctor proposed surgery on a young man's scarred hand and allegedly guaranteed a perfect result.",
     caseSummary: "George Hawkins underwent a skin-graft operation after Dr. McGee allegedly promised a one-hundred-percent perfect hand. The court treated the promise as capable of creating a warranty and explained that contract damages compare the promised result with the result actually received.",
     legalIssue: "Contract formation and expectation damages for breach of a promised medical result."
@@ -70,7 +70,7 @@ export const CASES = [
       { items: ["objective intent", "farm"], result: "specific performance" }
     ],
     requiredDiscoveries: ["signed contract", "claimed joke", "objective intent", "specific performance"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "Two men discussed selling a farm while drinking and wrote the terms on the back of a restaurant check.",
     caseSummary: "W. O. Lucy treated the signed writing as a real agreement to buy the Ferguson farm for $50,000. A. H. Zehmer later called it a joke. The court enforced the agreement because Zehmer's outward words and actions would lead a reasonable person to understand that he meant to contract.",
     legalIssue: "Objective manifestation of assent and specific performance of a land-sale contract."
@@ -93,7 +93,7 @@ export const CASES = [
       { items: ["full consequences", "aggravated injury"], result: "eggshell plaintiff" }
     ],
     requiredDiscoveries: ["unlawful contact", "aggravated injury", "battery", "eggshell plaintiff"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "One student lightly kicked another student's leg while they sat in a classroom.",
     caseSummary: "George Putney intended the contact but not the serious harm. The small kick aggravated Andrew Vosburg's earlier leg injury. Because the contact was unlawful in the classroom, Putney could be held responsible for the full consequences even though the extent of harm was unexpected.",
     legalIssue: "Battery, intent to make unlawful contact, and responsibility for an unexpectedly severe injury."
@@ -116,7 +116,7 @@ export const CASES = [
       { items: ["young child", "battery intent"], result: "child liability" }
     ],
     requiredDiscoveries: ["moved chair", "substantial certainty", "fractured hip", "battery intent"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A child moved a lightweight lawn chair as an adult was about to sit down.",
     caseSummary: "Ruth Garratt fell and fractured her hip after five-year-old Brian Dailey moved the chair. The court sent the case back for a finding on whether Brian knew with substantial certainty that she would try to sit where the chair had been.",
     legalIssue: "Intent for battery can exist when a person knows with substantial certainty that harmful or offensive contact will result."
@@ -140,7 +140,7 @@ export const CASES = [
       { items: ["objective reasonableness", "alleged offer"], result: "no contract" }
     ],
     requiredDiscoveries: ["Harrier scene", "alleged offer", "objective reasonableness", "no contract"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A television commercial showed a teenager arriving at school in a military jet priced at seven million promotional points.",
     caseSummary: "John Leonard tried to accept what he viewed as an offer for a Harrier jet. The court affirmed summary judgment for PepsiCo because the commercial was not an offer and no objective, reasonable person would understand it as a serious promise to deliver the jet.",
     legalIssue: "Whether an advertisement is an offer, objective reasonableness, and contract formation."
@@ -164,7 +164,7 @@ export const CASES = [
       { items: ["burden of proof", "disputed term"], result: "broader meaning" }
     ],
     requiredDiscoveries: ["disputed term", "older birds delivered", "ambiguity", "trade usage", "burden of proof"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A buyer and seller used the word “chicken” in sales contracts but disagreed over whether it included older stewing birds.",
     caseSummary: "The buyer argued that chicken meant young broilers and fryers; the seller read it more broadly. After examining the contract language, dictionaries, regulations, trade usage, negotiations, and conduct, the court held that the buyer had not proved the narrower meaning.",
     legalIssue: "Interpreting an ambiguous contract term and allocating the burden of proving the asserted meaning."
@@ -188,7 +188,7 @@ export const CASES = [
       { items: ["deadly force", "attempted theft"], result: "excessive force" }
     ],
     requiredDiscoveries: ["spring gun", "hidden trap", "serious injury", "excessive force"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "Owners of an unoccupied farmhouse rigged a shotgun to fire when someone opened a bedroom door.",
     caseSummary: "Marvin Katko entered the house intending to take old bottles and was seriously injured by the concealed spring gun. The Iowa Supreme Court upheld the judgment because property owners may not use force likely to kill or seriously injure merely to protect unoccupied property.",
     legalIssue: "The limits of force in defense of property and liability to a trespasser injured by a concealed mechanical trap."
@@ -212,7 +212,7 @@ export const CASES = [
       { items: ["alternative liability", "unknown shooter"], result: "burden shifts" }
     ],
     requiredDiscoveries: ["simultaneous shots", "pellet injury", "unknown shooter", "alternative liability"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "Two hunters fired toward the same quail, and birdshot struck their companion.",
     caseSummary: "Both defendants negligently fired in Charles Summers's direction, but the evidence could not identify which gun caused the key injury. The court held both liable unless either could show that he was not the cause.",
     legalIssue: "Alternative liability and shifting the burden of causation when all possible defendants acted negligently."
@@ -237,7 +237,7 @@ export const CASES = [
       { items: ["probable defect", "product liability"], result: "strict liability proposal" }
     ],
     requiredDiscoveries: ["hand injury", "probable defect", "res ipsa loquitur", "strict liability proposal"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A waitress was placing bottles in a refrigerator when a Coca-Cola bottle broke in her hand.",
     caseSummary: "The court upheld a negligence verdict using res ipsa loquitur because a carefully handled bottle would not ordinarily explode without negligence. In a famous concurrence, Justice Traynor argued that manufacturers should instead face strict liability for defective products placed on the market.",
     legalIssue: "Res ipsa loquitur in the majority opinion and the influential strict-products-liability proposal in Justice Traynor's concurrence."
@@ -260,7 +260,7 @@ export const CASES = [
       { items: ["consideration", "$5,000"], result: "enforceable promise" }
     ],
     requiredDiscoveries: ["abstinence", "completed promise", "consideration", "enforceable promise"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "An uncle promised his nephew $5,000 if the nephew avoided drinking, tobacco, swearing, and gambling until age twenty-one.",
     caseSummary: "The nephew did what was requested. The court held that giving up conduct he had a legal right to engage in was sufficient consideration for the uncle's promise, whether or not the restraint benefited him.",
     legalIssue: "Consideration based on bargained-for forbearance of a legal right."
@@ -284,7 +284,7 @@ export const CASES = [
       { items: ["bargained-for benefit", "removal and replacement"], result: "consideration alleged" }
     ],
     requiredDiscoveries: ["AggRite", "cracked pavement", "avoided disposal costs", "consideration alleged"],
-    revealThreshold: 4,
+    revealThreshold: 3,
     everydayOrigin: "A paving subcontractor used free recycled aggregate in a high-school parking-lot project.",
     caseSummary: "Pennsy alleged that the AggRite pavement cracked and had to be removed and replaced. The Superior Court reversed dismissal of the contract count because the complaint could support an inference that American Ash offered the material to avoid disposal costs, supplying a bargained-for benefit and possible consideration.",
     legalIssue: "At the pleading stage, whether a supplier's avoided disposal costs could make free material part of a bargained-for exchange supported by consideration."

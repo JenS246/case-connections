@@ -9,8 +9,6 @@ const elements = {
   secondSelection: document.querySelector("#second-selection"),
   clearButton: document.querySelector("#clear-button"),
   discoveryList: document.querySelector("#discovery-list"),
-  discoveryCount: document.querySelector("#discovery-count"),
-  progressLabel: document.querySelector("#progress-label"),
   progressStitches: document.querySelector("#progress-stitches"),
   hintButton: document.querySelector("#hint-button"),
   restartButton: document.querySelector("#restart-button"),
@@ -172,7 +170,6 @@ function renderTray() {
 
 function renderDiscoveries() {
   elements.discoveryList.replaceChildren();
-  elements.discoveryCount.textContent = `${state.discoveries.length} found`;
 
   if (state.discoveries.length === 0) {
     return;
@@ -193,7 +190,8 @@ function renderDiscoveries() {
 function renderProgress() {
   const progress = essentialProgress(currentCase(), state.discovered);
   const total = currentCase().revealThreshold;
-  elements.progressLabel.textContent = `${Math.min(progress, total)} of ${total}`;
+  elements.progressStitches.setAttribute("aria-valuemax", String(total));
+  elements.progressStitches.setAttribute("aria-valuenow", String(Math.min(progress, total)));
   elements.progressStitches.replaceChildren();
 
   for (let index = 0; index < total; index += 1) {
@@ -212,7 +210,12 @@ function showHint() {
   }
 
   const option = options[Math.floor(Math.random() * options.length)];
-  setFeedback(`Margin note: try ${option.items[0]} with ${option.items[1]}.`, "hint");
+  const prompts = [
+    `Look for two notes that could suggest “${option.result}.”`,
+    `One available connection leads to “${option.result}.” What evidence points there?`,
+    `A useful next discovery is “${option.result}.” Which details support it?`
+  ];
+  setFeedback(prompts[Math.floor(Math.random() * prompts.length)], "hint");
 }
 
 function populateReveal() {
@@ -232,6 +235,10 @@ function openReveal(delay = 0) {
   }, delay);
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function maybeRevealCase() {
   if (state.revealShown) return;
   const progress = essentialProgress(currentCase(), state.discovered);
@@ -239,7 +246,7 @@ function maybeRevealCase() {
 
   state.revealShown = true;
   elements.viewResultsButton.hidden = false;
-  openReveal(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450);
+  openReveal(prefersReducedMotion() ? 0 : 450);
 }
 
 elements.clearButton.addEventListener("click", () => {

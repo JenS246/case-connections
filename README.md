@@ -9,9 +9,9 @@ The visual language is a courtroom sketchbook: warm paper, irregular ink borders
 - Every round begins with four to six ordinary word cards.
 - Selecting two cards checks an order-independent, curated combination map.
 - Successful results remain in the tray and can be combined again.
-- Essential discoveries advance the case without naming it too early.
+- Three successful discoveries unseal the case, keeping each round quick.
 - Once the reveal threshold is reached, the game shows the case name, court, citation, plain-language explanation, legal issue, and a direct link to the published opinion or a reliable reproduction.
-- New Round chooses a different case. Restart Round clears the current case. Hint suggests one currently available pair.
+- New Round chooses a different case. Restart Round clears the current case. Hint suggests a possible discovery without naming the cards.
 - After a player continues exploring a completed case, View Case Results reopens the full reveal.
 
 The launch collection contains 12 researched opinions. Case facts and links live in `site/cases.js`; the interface never asks an AI model to invent legal content.

@@ -58,6 +58,21 @@ test("hints expose only combinations currently possible and not already known", 
   assert.ok(options.every((entry) => !discovered.has(entry.result)));
 });
 
+test("every case reveals after three successful discoveries", () => {
+  for (const record of CASES) {
+    const discovered = new Set(record.startingWords);
+
+    while (essentialProgress(record, discovered) < record.revealThreshold) {
+      const next = availableCombinations(record, discovered)[0];
+      assert.ok(next, `${record.id}: no path to a quick reveal`);
+      discovered.add(next.result);
+    }
+
+    assert.equal(record.revealThreshold, 3);
+    assert.equal(essentialProgress(record, discovered), 3);
+  }
+});
+
 test("case records include concise reveal copy and touch-sized starting sets", () => {
   for (const record of CASES) {
     assert.ok(record.startingWords.length >= 4 && record.startingWords.length <= 6);
@@ -80,6 +95,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(html, />Hint</);
   assert.match(html, />What happened\?</);
   assert.match(html, />working theory</);
+  assert.match(html, /Pair ordinary details\./);
   assert.match(html, /Apply discoveries to find enough essential clues to unseal the case\./);
   assert.match(styles, /\.doodle-door/);
   assert.match(styles, /\.doodle-reporter/);
@@ -100,6 +116,12 @@ test("the play surface keeps results reachable and uses the revised copy", async
 
   assert.ok(!html.includes('id="sound-button"'));
   assert.ok(!html.includes("your working theory"));
+  assert.ok(!html.includes("0 found"));
+  assert.ok(!html.includes("0 of 4"));
+  assert.ok(!html.includes('id="discovery-count"'));
+  assert.ok(!html.includes('id="progress-label"'));
+  assert.ok(!app.includes("Margin note: try"));
+  assert.match(app, /function prefersReducedMotion\(\)/);
   assert.ok(!app.includes("AudioContext"));
   assert.ok(!html.includes('class="notes-kicker"'));
 });

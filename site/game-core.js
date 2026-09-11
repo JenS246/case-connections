@@ -30,5 +30,8 @@ export function availableCombinations(caseRecord, discovered) {
 
 export function essentialProgress(caseRecord, discovered) {
   const known = new Set(discovered);
-  return caseRecord.requiredDiscoveries.filter((item) => known.has(item)).length;
+  const discoveredResults = caseRecord.combinations
+    .map((combination) => combination.result)
+    .filter((result) => known.has(result));
+  return new Set(discoveredResults).size;
 }
