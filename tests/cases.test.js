@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { CASES } from "../site/cases.js";
 import { availableCombinations, essentialProgress, findCombination, pairKey } from "../site/game-core.js";
 
@@ -64,4 +65,39 @@ test("case records include concise reveal copy and touch-sized starting sets", (
     assert.ok(record.caseSummary.length >= 80);
     assert.ok(record.legalIssue.length >= 35);
   }
+});
+
+test("the play surface keeps results reachable and uses the revised copy", async () => {
+  const [html, app, styles] = await Promise.all([
+    readFile(new URL("../site/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../site/app.js", import.meta.url), "utf8"),
+    readFile(new URL("../site/styles.css", import.meta.url), "utf8")
+  ]);
+
+  assert.match(html, /id="view-results-button"/);
+  assert.match(html, />View Case Results</);
+  assert.match(app, /viewResultsButton\.addEventListener\("click", \(\) => openReveal\(\)\)/);
+  assert.match(html, />Hint</);
+  assert.match(html, />What happened\?</);
+  assert.match(html, /Apply discoveries to find enough essential clues to unseal the case\./);
+  assert.match(styles, /\.doodle-door/);
+  assert.match(styles, /\.doodle-reporter/);
+
+  const retiredCopy = [
+    "Ask for a hint",
+    "Your successful connections will collect here",
+    "What happened here?",
+    "choose one",
+    "then another",
+    "that seem connected",
+    "Keep using discoveries"
+  ];
+
+  for (const phrase of retiredCopy) {
+    assert.ok(!html.includes(phrase), `retired copy remains: ${phrase}`);
+  }
+
+  assert.ok(!html.includes('id="sound-button"'));
+  assert.ok(!app.includes("AudioContext"));
+  assert.ok(!html.includes('class="notes-kicker"'));
 });

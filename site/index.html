@@ -40,8 +40,25 @@
         <span class="doodle-label">gallery</span>
         <i></i><i></i><i></i>
       </div>
+      <div class="doodle doodle-door">
+        <span class="doodle-label">courtroom</span>
+        <i class="door-frame"></i><i class="door-panel"></i><i class="door-knob"></i>
+      </div>
+      <div class="doodle doodle-clerk">
+        <span class="doodle-label">clerk</span>
+        <i class="clerk-desk"></i><i class="clerk-chair"></i>
+      </div>
+      <div class="doodle doodle-reporter">
+        <span class="doodle-label">court reporter</span>
+        <i class="reporter-chair"></i><i class="reporter-machine"></i>
+      </div>
+      <div class="doodle doodle-exhibit">
+        <span class="doodle-label">exhibit</span>
+        <i class="exhibit-board"></i><i class="exhibit-stand"></i>
+      </div>
       <div class="margin-arrow arrow-one"></div>
       <div class="margin-arrow arrow-two"></div>
+      <div class="margin-arrow arrow-three"></div>
     </div>
 
     <header class="site-header">
@@ -51,17 +68,14 @@
       </a>
       <nav class="header-actions" aria-label="Game controls">
         <button class="text-button" id="how-button" type="button">How to Play</button>
-        <button class="text-button sound-toggle" id="sound-button" type="button" aria-pressed="false">
-          Sound off
-        </button>
       </nav>
     </header>
 
     <main class="game-shell">
       <section class="round-heading" aria-labelledby="round-title">
         <div>
-          <p class="eyebrow" id="round-label">Case file 01 of 12</p>
-          <h1 id="round-title">What happened here?</h1>
+          <p class="eyebrow" id="round-label">Case file 01</p>
+          <h1 id="round-title">What happened?</h1>
         </div>
         <p class="round-intro">Pair the ordinary details. Follow the facts until the legal question appears.</p>
       </section>
@@ -71,37 +85,32 @@
           <div class="selection-strip" aria-label="Current selection">
             <span class="selection-note">your working theory</span>
             <div class="selection-slots">
-              <span class="selection-slot" id="first-selection">choose one</span>
+              <span class="selection-slot" id="first-selection" aria-label="First selected word"></span>
               <span class="combine-symbol" aria-hidden="true">+</span>
-              <span class="selection-slot" id="second-selection">then another</span>
+              <span class="selection-slot" id="second-selection" aria-label="Second selected word"></span>
             </div>
             <button class="clear-button" id="clear-button" type="button" disabled>Clear</button>
           </div>
 
           <div class="feedback" id="feedback" role="status" aria-live="polite">
-            Start with any two notes that seem connected.
+            Start with any two notes.
           </div>
 
           <div class="word-tray" id="word-tray" aria-label="Available words"></div>
 
           <div class="play-footer">
-            <button class="primary-button" id="hint-button" type="button">Ask for a hint</button>
+            <button class="primary-button" id="hint-button" type="button">Hint</button>
             <p class="keyboard-note">Keyboard: Tab to a card, Enter to select, Escape to clear.</p>
           </div>
         </div>
 
         <aside class="case-notes" aria-labelledby="notes-title">
           <div class="notes-heading">
-            <div>
-              <p class="notes-kicker">case notes</p>
-              <h2 id="notes-title">Discoveries</h2>
-            </div>
+            <h2 id="notes-title">Discoveries</h2>
             <span class="discovery-count" id="discovery-count">0 found</span>
           </div>
 
-          <ol class="discovery-list" id="discovery-list">
-            <li class="empty-discovery">Your successful connections will collect here.</li>
-          </ol>
+          <ol class="discovery-list" id="discovery-list"></ol>
 
           <div class="progress-wrap">
             <div class="progress-copy">
@@ -114,6 +123,7 @@
       </section>
 
       <section class="round-actions" aria-label="Round actions">
+        <button class="results-button" id="view-results-button" type="button" hidden>View Case Results</button>
         <button class="outline-button" id="restart-button" type="button">Restart Round</button>
         <button class="outline-button" id="new-round-button" type="button">New Round</button>
       </section>
@@ -132,7 +142,7 @@
         <ol class="how-steps">
           <li><span>1</span><p>Select one word card, then a second.</p></li>
           <li><span>2</span><p>A sound connection creates a new fact, object, action, or doctrine.</p></li>
-          <li><span>3</span><p>Keep using discoveries. Find enough essential clues to unseal the case.</p></li>
+          <li><span>3</span><p>Apply discoveries to find enough essential clues to unseal the case.</p></li>
         </ol>
         <p class="how-note">Not every pair works, and you do not need every possible discovery. The case name stays hidden until your theory is strong enough.</p>
         <button class="primary-button" data-close-dialog="how-dialog" type="button">Begin investigating</button>
@@ -166,7 +176,7 @@
             Read the published opinion <span aria-hidden="true">↗</span>
           </a>
           <button class="primary-button" id="reveal-next-button" type="button">Try another case</button>
-          <button class="quiet-button" data-close-dialog="reveal-dialog" type="button">Keep exploring this one</button>
+          <button class="quiet-button" data-close-dialog="reveal-dialog" type="button">Continue exploring this case</button>
         </div>
       </article>
     </dialog>

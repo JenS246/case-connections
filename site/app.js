@@ -15,8 +15,8 @@ const elements = {
   hintButton: document.querySelector("#hint-button"),
   restartButton: document.querySelector("#restart-button"),
   newRoundButton: document.querySelector("#new-round-button"),
+  viewResultsButton: document.querySelector("#view-results-button"),
   howButton: document.querySelector("#how-button"),
-  soundButton: document.querySelector("#sound-button"),
   howDialog: document.querySelector("#how-dialog"),
   revealDialog: document.querySelector("#reveal-dialog"),
   revealName: document.querySelector("#reveal-case-name"),
@@ -35,9 +35,7 @@ const state = {
   discoveries: [],
   selected: [],
   newest: null,
-  soundEnabled: false,
-  revealShown: false,
-  audioContext: null
+  revealShown: false
 };
 
 function currentCase() {
@@ -59,8 +57,9 @@ function startRound(caseIndex, incrementRound = true) {
   state.selected = [];
   state.newest = null;
   state.revealShown = false;
-  elements.roundLabel.textContent = `Case file ${String(state.roundNumber).padStart(2, "0")} of many`;
-  setFeedback("Start with any two notes that seem connected.", "neutral");
+  elements.viewResultsButton.hidden = true;
+  elements.roundLabel.textContent = `Case file ${String(state.roundNumber).padStart(2, "0")}`;
+  setFeedback("Start with any two notes.", "neutral");
   render();
 }
 
@@ -70,6 +69,7 @@ function restartRound() {
   state.selected = [];
   state.newest = null;
   state.revealShown = false;
+  elements.viewResultsButton.hidden = true;
   setFeedback("The file is clean. Build your theory again.", "neutral");
   render();
 }
@@ -108,7 +108,6 @@ function resolveSelection() {
     elements.tray.classList.remove("tray-miss");
     void elements.tray.offsetWidth;
     elements.tray.classList.add("tray-miss");
-    playTone("miss");
     state.selected = [];
     render();
     return;
@@ -124,10 +123,8 @@ function resolveSelection() {
     });
     state.newest = combination.result;
     setFeedback(`${first} plus ${second} gives you ${combination.result}.`, "success");
-    playTone("success");
   } else {
     setFeedback(`${combination.result} is already in your notes.`, "neutral");
-    playTone("known");
   }
 
   state.selected = [];
@@ -148,8 +145,8 @@ function render() {
 }
 
 function renderSelection() {
-  elements.firstSelection.textContent = state.selected[0] ?? "choose one";
-  elements.secondSelection.textContent = state.selected[1] ?? "then another";
+  elements.firstSelection.textContent = state.selected[0] ?? "";
+  elements.secondSelection.textContent = state.selected[1] ?? "";
   elements.firstSelection.classList.toggle("has-value", Boolean(state.selected[0]));
   elements.secondSelection.classList.toggle("has-value", Boolean(state.selected[1]));
   elements.clearButton.disabled = state.selected.length === 0;
@@ -178,10 +175,6 @@ function renderDiscoveries() {
   elements.discoveryCount.textContent = `${state.discoveries.length} found`;
 
   if (state.discoveries.length === 0) {
-    const empty = document.createElement("li");
-    empty.className = "empty-discovery";
-    empty.textContent = "Your successful connections will collect here.";
-    elements.discoveryList.append(empty);
     return;
   }
 
@@ -220,7 +213,23 @@ function showHint() {
 
   const option = options[Math.floor(Math.random() * options.length)];
   setFeedback(`Margin note: try ${option.items[0]} with ${option.items[1]}.`, "hint");
-  playTone("known");
+}
+
+function populateReveal() {
+  const record = currentCase();
+  elements.revealName.textContent = record.caseName;
+  elements.revealCitation.textContent = `${record.court}, ${record.year} | ${record.citation}`;
+  elements.revealOrigin.textContent = record.everydayOrigin;
+  elements.revealSummary.textContent = record.caseSummary;
+  elements.revealIssue.textContent = record.legalIssue;
+  elements.opinionLink.href = record.opinionUrl;
+}
+
+function openReveal(delay = 0) {
+  populateReveal();
+  window.setTimeout(() => {
+    if (!elements.revealDialog.open) elements.revealDialog.showModal();
+  }, delay);
 }
 
 function maybeRevealCase() {
@@ -229,40 +238,8 @@ function maybeRevealCase() {
   if (progress < currentCase().revealThreshold) return;
 
   state.revealShown = true;
-  const record = currentCase();
-  elements.revealName.textContent = record.caseName;
-  elements.revealCitation.textContent = `${record.court}, ${record.year} | ${record.citation}`;
-  elements.revealOrigin.textContent = record.everydayOrigin;
-  elements.revealSummary.textContent = record.caseSummary;
-  elements.revealIssue.textContent = record.legalIssue;
-  elements.opinionLink.href = record.opinionUrl;
-  playTone("reveal");
-  window.setTimeout(() => elements.revealDialog.showModal(), prefersReducedMotion() ? 0 : 450);
-}
-
-function prefersReducedMotion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function playTone(kind) {
-  if (!state.soundEnabled) return;
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-
-  state.audioContext ??= new AudioContext();
-  const context = state.audioContext;
-  const oscillator = context.createOscillator();
-  const gain = context.createGain();
-  const frequencies = { miss: 146, known: 220, success: 330, reveal: 440 };
-  oscillator.type = kind === "miss" ? "triangle" : "sine";
-  oscillator.frequency.setValueAtTime(frequencies[kind], context.currentTime);
-  if (kind === "reveal") oscillator.frequency.exponentialRampToValueAtTime(660, context.currentTime + 0.22);
-  gain.gain.setValueAtTime(0.0001, context.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.08, context.currentTime + 0.015);
-  gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.28);
-  oscillator.connect(gain).connect(context.destination);
-  oscillator.start();
-  oscillator.stop(context.currentTime + 0.3);
+  elements.viewResultsButton.hidden = false;
+  openReveal(window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450);
 }
 
 elements.clearButton.addEventListener("click", () => {
@@ -274,18 +251,12 @@ elements.clearButton.addEventListener("click", () => {
 elements.hintButton.addEventListener("click", showHint);
 elements.restartButton.addEventListener("click", restartRound);
 elements.newRoundButton.addEventListener("click", () => startRound(scrambleCaseIndex()));
+elements.viewResultsButton.addEventListener("click", () => openReveal());
 elements.revealNextButton.addEventListener("click", () => {
   elements.revealDialog.close();
   startRound(scrambleCaseIndex());
 });
 elements.howButton.addEventListener("click", () => elements.howDialog.showModal());
-
-elements.soundButton.addEventListener("click", () => {
-  state.soundEnabled = !state.soundEnabled;
-  elements.soundButton.setAttribute("aria-pressed", String(state.soundEnabled));
-  elements.soundButton.textContent = state.soundEnabled ? "Sound on" : "Sound off";
-  if (state.soundEnabled) playTone("known");
-});
 
 document.querySelectorAll("[data-close-dialog]").forEach((button) => {
   button.addEventListener("click", () => document.querySelector(`#${button.dataset.closeDialog}`)?.close());
