@@ -120,7 +120,7 @@ function resolveSelection() {
       result: combination.result
     });
     state.newest = combination.result;
-    setFeedback(`${first} plus ${second} gives you ${combination.result}.`, "success");
+    setFeedback("", "success");
   } else {
     setFeedback(`${combination.result} is already in your notes.`, "neutral");
   }

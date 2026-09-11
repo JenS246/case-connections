@@ -104,6 +104,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(app, /No identified connection\. Test a new theory/);
   assert.match(app, /Think: \$\{option\.result\}\./);
   assert.match(app, /revealName\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(styles, /padding: 20px 0 4px/);
 
   const retiredCopy = [
     "Ask for a hint",
@@ -128,6 +129,9 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.ok(!html.includes('id="progress-label"'));
   assert.ok(!app.includes("Margin note: try"));
   assert.ok(!app.includes("Now choose what connects to"));
+  assert.ok(!app.includes("gives you"));
+  assert.ok(!html.includes("Keyboard: Tab to a card"));
+  assert.ok(!styles.includes(".keyboard-note"));
   assert.ok(!styles.includes(".doodle-door"));
   assert.ok(!styles.includes(".doodle-reporter"));
   assert.match(app, /function prefersReducedMotion\(\)/);

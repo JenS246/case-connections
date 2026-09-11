@@ -148,6 +148,7 @@ button:active,
   gap: 44px;
   align-items: end;
   margin-bottom: 26px;
+  padding-top: 16px;
 }
 
 .eyebrow,
@@ -411,7 +412,7 @@ h1 {
   display: flex;
   gap: 18px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-top: 16px;
   border-top: 1px solid var(--rule);
 }
@@ -444,14 +445,6 @@ h1 {
 
 .primary-button:hover {
   background: #6f241e;
-}
-
-.keyboard-note {
-  max-width: 40ch;
-  margin: 0;
-  color: var(--graphite);
-  font-size: 1rem;
-  line-height: 1.35;
 }
 
 .case-notes {
@@ -1115,6 +1108,7 @@ noscript {
     gap: 32px;
     align-items: center;
     margin-bottom: 10px;
+    padding: 20px 0 4px;
   }
 
   .eyebrow {
@@ -1131,7 +1125,7 @@ noscript {
   }
 
   .game-layout {
-    height: clamp(350px, calc(100dvh - 295px), 440px);
+    height: clamp(350px, calc(100dvh - 311px), 424px);
   }
 
   .play-sheet,
@@ -1373,10 +1367,6 @@ noscript {
 
   .play-footer {
     align-items: flex-start;
-  }
-
-  .keyboard-note {
-    display: none;
   }
 
   .primary-button {
