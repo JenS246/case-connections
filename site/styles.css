@@ -813,8 +813,9 @@ h1 {
 }
 
 .reveal-stamp {
-  display: inline-block;
-  margin-bottom: 7px;
+  display: block;
+  width: max-content;
+  margin: 0 0 7px auto;
   padding: 6px 10px;
   border: 3px double var(--accent);
   color: var(--accent);
@@ -1409,8 +1410,8 @@ noscript {
 
   .reveal-stamp {
     position: static;
-    display: inline-block;
-    margin-bottom: 12px;
+    display: block;
+    margin: 0 0 12px auto;
   }
 
   .reveal-dialog h2 {

@@ -109,6 +109,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(styles, /padding: 24px 15px 15px/);
   assert.match(styles, /font-size: clamp\(1\.25rem, 2\.4vw, 1\.55rem\)/);
   assert.match(styles, /white-space: nowrap/);
+  assert.match(styles, /margin: 0 0 7px auto/);
 
   const retiredCopy = [
     "Ask for a hint",
