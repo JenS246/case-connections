@@ -813,9 +813,8 @@ h1 {
 }
 
 .reveal-stamp {
-  position: absolute;
-  top: 19px;
-  right: 22px;
+  display: inline-block;
+  margin-bottom: 7px;
   padding: 6px 10px;
   border: 3px double var(--accent);
   color: var(--accent);
@@ -828,10 +827,12 @@ h1 {
 }
 
 .reveal-dialog h2 {
-  max-width: 21ch;
-  margin: 0 150px 5px 0;
-  font-size: clamp(1.65rem, 3.4vw, 3rem);
+  max-width: none;
+  margin: 0 0 5px;
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
   line-height: 1.05;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
 }
 
 .citation-line {
@@ -1278,6 +1279,10 @@ noscript {
     border-top: 1px solid var(--rule-strong);
     border-left: 0;
   }
+
+  .reveal-dialog h2 {
+    white-space: normal;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1411,7 +1416,7 @@ noscript {
   .reveal-dialog h2 {
     max-width: none;
     margin-right: 0;
-    font-size: clamp(1.6rem, 9vw, 2.3rem);
+    font-size: clamp(1.35rem, 6.5vw, 1.7rem);
   }
 
   .reveal-grid {
