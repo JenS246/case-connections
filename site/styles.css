@@ -214,6 +214,7 @@ h1 {
 .play-sheet {
   min-height: 510px;
   padding: clamp(18px, 3vw, 30px);
+  padding-top: clamp(28px, 4vw, 40px);
   border-radius: 7px 15px 6px 12px / 13px 7px 15px 8px;
   background-color: rgba(255, 253, 247, 0.96);
   transform: rotate(0.08deg);
@@ -1137,7 +1138,7 @@ noscript {
   .play-sheet {
     display: flex;
     flex-direction: column;
-    padding: 14px 18px;
+    padding: 24px 18px 14px;
   }
 
   .selection-strip {
@@ -1322,7 +1323,7 @@ noscript {
   }
 
   .play-sheet {
-    padding: 15px;
+    padding: 24px 15px 15px;
   }
 
   .selection-strip {

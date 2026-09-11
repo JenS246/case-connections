@@ -105,6 +105,8 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(app, /Think: \$\{option\.result\}\./);
   assert.match(app, /revealName\.focus\(\{ preventScroll: true \}\)/);
   assert.match(styles, /padding: 20px 0 4px/);
+  assert.match(styles, /padding: 24px 18px 14px/);
+  assert.match(styles, /padding: 24px 15px 15px/);
 
   const retiredCopy = [
     "Ask for a hint",
