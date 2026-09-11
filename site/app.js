@@ -1,5 +1,10 @@
 import { CASES } from "./cases.js";
-import { availableCombinations, createCaseDeck, essentialProgress, findCombination } from "./game-core.js";
+import {
+  availableCombinations,
+  createCaseNavigator,
+  essentialProgress,
+  findCombination
+} from "./game-core.js";
 
 const elements = {
   roundLabel: document.querySelector("#round-label"),
@@ -12,7 +17,8 @@ const elements = {
   progressStitches: document.querySelector("#progress-stitches"),
   hintButton: document.querySelector("#hint-button"),
   restartButton: document.querySelector("#restart-button"),
-  newRoundButton: document.querySelector("#new-round-button"),
+  previousCaseButton: document.querySelector("#previous-case-button"),
+  nextCaseButton: document.querySelector("#next-case-button"),
   viewResultsButton: document.querySelector("#view-results-button"),
   howButton: document.querySelector("#how-button"),
   howDialog: document.querySelector("#how-dialog"),
@@ -26,6 +32,8 @@ const elements = {
   revealNextButton: document.querySelector("#reveal-next-button")
 };
 
+const caseNavigator = createCaseNavigator(CASES.length, 0);
+
 const state = {
   caseIndex: 0,
   roundNumber: 1,
@@ -33,20 +41,20 @@ const state = {
   discoveries: [],
   selected: [],
   newest: null,
-  revealShown: false,
-  caseDeck: createCaseDeck(CASES.length, 0)
+  revealShown: false
 };
 
 function currentCase() {
   return CASES[state.caseIndex];
 }
 
-function nextCaseIndex() {
-  if (state.caseDeck.length === 0) {
-    state.caseDeck = createCaseDeck(CASES.length, state.caseIndex);
-  }
+function navigateCase(direction) {
+  const caseIndex = direction === "previous" ? caseNavigator.previous() : caseNavigator.next();
+  startRound(caseIndex);
+}
 
-  return state.caseDeck.shift() ?? state.caseIndex;
+function updateCaseNavigation() {
+  elements.previousCaseButton.disabled = !caseNavigator.canGoBack();
 }
 
 function startRound(caseIndex, incrementRound = true) {
@@ -60,6 +68,7 @@ function startRound(caseIndex, incrementRound = true) {
   elements.viewResultsButton.hidden = true;
   elements.roundLabel.textContent = `Case file ${String(state.roundNumber).padStart(2, "0")}`;
   setFeedback("Start with any two notes.", "neutral");
+  updateCaseNavigation();
   render();
 }
 
@@ -258,11 +267,12 @@ elements.clearButton.addEventListener("click", () => {
 
 elements.hintButton.addEventListener("click", showHint);
 elements.restartButton.addEventListener("click", restartRound);
-elements.newRoundButton.addEventListener("click", () => startRound(nextCaseIndex()));
+elements.previousCaseButton.addEventListener("click", () => navigateCase("previous"));
+elements.nextCaseButton.addEventListener("click", () => navigateCase("next"));
 elements.viewResultsButton.addEventListener("click", () => openReveal());
 elements.revealNextButton.addEventListener("click", () => {
   elements.revealDialog.close();
-  startRound(nextCaseIndex());
+  navigateCase("next");
 });
 elements.howButton.addEventListener("click", () => elements.howDialog.showModal());
 

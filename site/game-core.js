@@ -48,3 +48,33 @@ export function createCaseDeck(caseCount, excludedIndex, random = Math.random) {
 
   return deck;
 }
+
+export function createCaseNavigator(caseCount, initialIndex = 0, random = Math.random) {
+  let history = [initialIndex];
+  let position = 0;
+  let deck = createCaseDeck(caseCount, initialIndex, random);
+
+  return {
+    current: () => history[position],
+    canGoBack: () => position > 0,
+    previous: () => {
+      if (position > 0) position -= 1;
+      return history[position];
+    },
+    next: () => {
+      if (position < history.length - 1) {
+        position += 1;
+        return history[position];
+      }
+
+      if (deck.length === 0) {
+        deck = createCaseDeck(caseCount, history[position], random);
+      }
+
+      const nextIndex = deck.shift() ?? history[position];
+      history.push(nextIndex);
+      position += 1;
+      return nextIndex;
+    }
+  };
+}

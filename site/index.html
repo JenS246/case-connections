@@ -107,7 +107,14 @@
       <section class="round-actions" aria-label="Round actions">
         <button class="results-button" id="view-results-button" type="button" hidden>View Case Results</button>
         <button class="outline-button" id="restart-button" type="button">Restart Round</button>
-        <button class="outline-button" id="new-round-button" type="button">New Round</button>
+        <div class="case-navigation" aria-label="Choose a case">
+          <button class="outline-button case-nav-button" id="previous-case-button" type="button" aria-label="Previous case" title="Previous case" disabled>
+            <span aria-hidden="true">←</span>
+          </button>
+          <button class="outline-button case-nav-button" id="next-case-button" type="button" aria-label="Next case" title="Next case">
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </section>
     </main>
 

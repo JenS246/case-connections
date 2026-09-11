@@ -585,6 +585,33 @@ h1 {
   background: transparent;
 }
 
+.case-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, 46px);
+  gap: 8px;
+}
+
+.case-nav-button {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.case-nav-button:first-child {
+  transform: rotate(-1deg);
+}
+
+.case-nav-button:last-child {
+  transform: rotate(1.2deg);
+}
+
+.case-nav-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
 .results-button {
   padding: 9px 15px;
   border: 1.8px solid var(--accent-dark);
@@ -597,7 +624,7 @@ h1 {
   background: var(--accent-dark);
 }
 
-.outline-button:hover {
+.outline-button:not(:disabled):hover {
   color: var(--paper-light);
   background: var(--ink);
 }
@@ -1387,6 +1414,11 @@ noscript {
   .round-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+
+  .case-navigation {
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
   }
 
   .outline-button {

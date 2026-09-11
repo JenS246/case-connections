@@ -5,6 +5,7 @@ import { CASES } from "../site/cases.js";
 import {
   availableCombinations,
   createCaseDeck,
+  createCaseNavigator,
   essentialProgress,
   findCombination,
   pairKey
@@ -33,6 +34,22 @@ test("the case deck shows every other case once before reshuffling", () => {
   assert.equal(new Set(deck).size, deck.length);
   assert.ok(!deck.includes(0));
   assert.deepEqual([...deck].sort((a, b) => a - b), Array.from({ length: CASES.length - 1 }, (_, index) => index + 1));
+});
+
+test("case navigation moves backward and forward without duplicating unseen cases", () => {
+  const navigator = createCaseNavigator(CASES.length, 0, () => 0.42);
+  const firstCycle = [navigator.current()];
+
+  for (let index = 1; index < CASES.length; index += 1) {
+    firstCycle.push(navigator.next());
+  }
+
+  assert.equal(new Set(firstCycle).size, CASES.length);
+  const lastCase = navigator.current();
+  const previousCase = navigator.previous();
+  assert.notEqual(previousCase, lastCase);
+  assert.ok(navigator.canGoBack());
+  assert.equal(navigator.next(), lastCase);
 });
 
 test("every combination graph and reveal target is reachable", () => {
@@ -112,6 +129,10 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(html, />Hint</);
   assert.match(html, />What happened\?</);
   assert.match(html, />working theory</);
+  assert.match(html, /id="previous-case-button"/);
+  assert.match(html, /id="next-case-button"/);
+  assert.match(html, /aria-label="Previous case"/);
+  assert.match(html, /aria-label="Next case"/);
   assert.match(html, /Pair ordinary details\./);
   assert.match(html, /Apply discoveries to find enough essential clues to unseal the case\./);
   assert.equal((html.match(/class="doodle doodle-/g) ?? []).length, 4);
@@ -136,7 +157,8 @@ test("the play surface keeps results reachable and uses the revised copy", async
     "then another",
     "that seem connected",
     "Keep using discoveries",
-    "You found the thread"
+    "You found the thread",
+    "New Round"
   ];
 
   for (const phrase of retiredCopy) {
@@ -151,6 +173,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.ok(!html.includes('id="progress-label"'));
   assert.ok(!app.includes("Margin note: try"));
   assert.ok(!app.includes("Now choose what connects to"));
+  assert.ok(!app.includes("newRoundButton"));
   assert.ok(!app.includes("gives you"));
   assert.ok(!html.includes("Keyboard: Tab to a card"));
   assert.ok(!styles.includes(".keyboard-note"));
