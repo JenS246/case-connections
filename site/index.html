@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <meta
+      name="description"
+      content="Combine ordinary details to uncover the real judicial opinion hiding behind each legal puzzle."
+    />
+    <meta property="og:title" content="Case Connections" />
+    <meta
+      property="og:description"
+      content="A legal word-combination game built from twelve real U.S. judicial opinions."
+    />
+    <title>Case Connections</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#word-tray">Skip to the word tray</a>
+
+    <div class="courtroom-doodles" aria-hidden="true">
+      <div class="doodle doodle-bench">
+        <span class="doodle-label">the bench</span>
+        <i class="bench-top"></i><i class="bench-panel one"></i><i class="bench-panel two"></i>
+      </div>
+      <div class="doodle doodle-witness">
+        <span class="doodle-label">witness</span>
+        <i class="witness-rail"></i><i class="witness-mic"></i>
+      </div>
+      <div class="doodle doodle-jury">
+        <span class="doodle-label">jury box</span>
+        <i></i><i></i><i></i><i></i>
+      </div>
+      <div class="doodle doodle-counsel">
+        <span class="doodle-label">counsel table</span>
+        <i class="table-top"></i><i class="table-leg left"></i><i class="table-leg right"></i>
+      </div>
+      <div class="doodle doodle-gallery">
+        <span class="doodle-label">gallery</span>
+        <i></i><i></i><i></i>
+      </div>
+      <div class="margin-arrow arrow-one"></div>
+      <div class="margin-arrow arrow-two"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="wordmark" href="./" aria-label="Case Connections, start page">
+        <span>Case</span>
+        <span class="wordmark-mark">Connections</span>
+      </a>
+      <nav class="header-actions" aria-label="Game controls">
+        <button class="text-button" id="how-button" type="button">How to Play</button>
+        <button class="text-button sound-toggle" id="sound-button" type="button" aria-pressed="false">
+          Sound off
+        </button>
+      </nav>
+    </header>
+
+    <main class="game-shell">
+      <section class="round-heading" aria-labelledby="round-title">
+        <div>
+          <p class="eyebrow" id="round-label">Case file 01 of 12</p>
+          <h1 id="round-title">What happened here?</h1>
+        </div>
+        <p class="round-intro">Pair the ordinary details. Follow the facts until the legal question appears.</p>
+      </section>
+
+      <section class="game-layout" aria-label="Current case puzzle">
+        <div class="play-sheet">
+          <div class="selection-strip" aria-label="Current selection">
+            <span class="selection-note">your working theory</span>
+            <div class="selection-slots">
+              <span class="selection-slot" id="first-selection">choose one</span>
+              <span class="combine-symbol" aria-hidden="true">+</span>
+              <span class="selection-slot" id="second-selection">then another</span>
+            </div>
+            <button class="clear-button" id="clear-button" type="button" disabled>Clear</button>
+          </div>
+
+          <div class="feedback" id="feedback" role="status" aria-live="polite">
+            Start with any two notes that seem connected.
+          </div>
+
+          <div class="word-tray" id="word-tray" aria-label="Available words"></div>
+
+          <div class="play-footer">
+            <button class="primary-button" id="hint-button" type="button">Ask for a hint</button>
+            <p class="keyboard-note">Keyboard: Tab to a card, Enter to select, Escape to clear.</p>
+          </div>
+        </div>
+
+        <aside class="case-notes" aria-labelledby="notes-title">
+          <div class="notes-heading">
+            <div>
+              <p class="notes-kicker">case notes</p>
+              <h2 id="notes-title">Discoveries</h2>
+            </div>
+            <span class="discovery-count" id="discovery-count">0 found</span>
+          </div>
+
+          <ol class="discovery-list" id="discovery-list">
+            <li class="empty-discovery">Your successful connections will collect here.</li>
+          </ol>
+
+          <div class="progress-wrap">
+            <div class="progress-copy">
+              <span>Essential clues</span>
+              <strong id="progress-label">0 of 4</strong>
+            </div>
+            <div class="progress-stitches" id="progress-stitches" aria-hidden="true"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="round-actions" aria-label="Round actions">
+        <button class="outline-button" id="restart-button" type="button">Restart Round</button>
+        <button class="outline-button" id="new-round-button" type="button">New Round</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built from published opinions. Made for curious legal minds.</p>
+      <p class="footer-note">Educational game, not legal advice.</p>
+    </footer>
+
+    <dialog class="paper-dialog how-dialog" id="how-dialog" aria-labelledby="how-title">
+      <div class="dialog-inner">
+        <button class="dialog-close" data-close-dialog="how-dialog" type="button" aria-label="Close instructions">×</button>
+        <p class="dialog-kicker">a note from chambers</p>
+        <h2 id="how-title">How to play</h2>
+        <ol class="how-steps">
+          <li><span>1</span><p>Select one word card, then a second.</p></li>
+          <li><span>2</span><p>A sound connection creates a new fact, object, action, or doctrine.</p></li>
+          <li><span>3</span><p>Keep using discoveries. Find enough essential clues to unseal the case.</p></li>
+        </ol>
+        <p class="how-note">Not every pair works, and you do not need every possible discovery. The case name stays hidden until your theory is strong enough.</p>
+        <button class="primary-button" data-close-dialog="how-dialog" type="button">Begin investigating</button>
+      </div>
+    </dialog>
+
+    <dialog class="paper-dialog reveal-dialog" id="reveal-dialog" aria-labelledby="reveal-case-name">
+      <article class="reveal-inner">
+        <div class="reveal-stamp">case connected</div>
+        <p class="reveal-kicker">You found the thread</p>
+        <h2 id="reveal-case-name"></h2>
+        <p class="citation-line" id="reveal-citation"></p>
+
+        <div class="reveal-grid">
+          <section>
+            <h3>The everyday beginning</h3>
+            <p id="reveal-origin"></p>
+          </section>
+          <section>
+            <h3>What the court faced</h3>
+            <p id="reveal-summary"></p>
+          </section>
+          <section class="legal-question">
+            <h3>The legal connection</h3>
+            <p id="reveal-issue"></p>
+          </section>
+        </div>
+
+        <div class="reveal-actions">
+          <a class="opinion-link" id="opinion-link" href="#" target="_blank" rel="noopener noreferrer">
+            Read the published opinion <span aria-hidden="true">↗</span>
+          </a>
+          <button class="primary-button" id="reveal-next-button" type="button">Try another case</button>
+          <button class="quiet-button" data-close-dialog="reveal-dialog" type="button">Keep exploring this one</button>
+        </div>
+      </article>
+    </dialog>
+
+    <noscript>This game needs JavaScript enabled so it can combine your case notes.</noscript>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

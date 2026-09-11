@@ -1,0 +1,15 @@
+{
+  "name": "case-connections",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "python3 -m http.server 4176 --directory site",
+    "check": "node --check site/app.js && node --check site/cases.js && node --check site/game-core.js",
+    "test": "node --test",
+    "build": "npm run check && npm test"
+  }
+}
