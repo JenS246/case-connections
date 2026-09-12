@@ -56,6 +56,7 @@ export function createCaseNavigator(caseCount, initialIndex = 0, random = Math.r
 
   return {
     current: () => history[position],
+    position: () => position,
     canGoBack: () => position > 0,
     previous: () => {
       if (position > 0) position -= 1;

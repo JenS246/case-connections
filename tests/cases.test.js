@@ -46,10 +46,13 @@ test("case navigation moves backward and forward without duplicating unseen case
 
   assert.equal(new Set(firstCycle).size, CASES.length);
   const lastCase = navigator.current();
+  assert.equal(navigator.position(), CASES.length - 1);
   const previousCase = navigator.previous();
   assert.notEqual(previousCase, lastCase);
+  assert.equal(navigator.position(), CASES.length - 2);
   assert.ok(navigator.canGoBack());
   assert.equal(navigator.next(), lastCase);
+  assert.equal(navigator.position(), CASES.length - 1);
 });
 
 test("every combination graph and reveal target is reachable", () => {
@@ -142,6 +145,7 @@ test("the play surface keeps results reachable and uses the revised copy", async
   assert.match(app, /No identified connection\. Test a new theory/);
   assert.match(app, /Think: \$\{option\.result\}\./);
   assert.match(app, /revealName\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(app, /roundNumber = caseNavigator\.position\(\) \+ 1/);
   assert.match(styles, /padding: 20px 0 4px/);
   assert.match(styles, /padding: 24px 18px 14px/);
   assert.match(styles, /padding: 24px 15px 15px/);

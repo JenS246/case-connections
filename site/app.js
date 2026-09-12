@@ -57,9 +57,9 @@ function updateCaseNavigation() {
   elements.previousCaseButton.disabled = !caseNavigator.canGoBack();
 }
 
-function startRound(caseIndex, incrementRound = true) {
+function startRound(caseIndex) {
   state.caseIndex = caseIndex;
-  state.roundNumber = incrementRound ? state.roundNumber + 1 : state.roundNumber;
+  state.roundNumber = caseNavigator.position() + 1;
   state.discovered = [...currentCase().startingWords];
   state.discoveries = [];
   state.selected = [];
@@ -300,4 +300,4 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-startRound(0, false);
+startRound(caseNavigator.current());
